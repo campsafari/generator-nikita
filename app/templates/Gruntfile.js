@@ -256,7 +256,7 @@ module.exports = function (grunt) {
         options: {
           baseUrl: "<%%= config.app %>/source/js",
           mainConfigFile: "<%%= config.app %>/source/js/main.js",
-          out: ".tmp/source/js/main.js"
+          out: ".tmp/source/js/main.js",
           name: "main"
         }
       }
