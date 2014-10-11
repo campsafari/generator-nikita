@@ -1,0 +1,53 @@
+<% if (includeFoundation) { %>
+@import "../../../bower_components/foundation/scss/foundation";
+<% } %>
+<% if (includeNikitaCss) { %>
+// nikita.css Mixins
+@import "../../../bower_components/nikita.css/mixins/_centering.scss";
+@import "../../../bower_components/nikita.css/mixins/_fixed-ratiobox.scss";
+@import "../../../bower_components/nikita.css/mixins/_font-smoothing.scss";
+@import "../../../bower_components/nikita.css/mixins/_layering.scss";
+@import "../../../bower_components/nikita.css/mixins/_px-to-rem.scss";
+@import "../../../bower_components/nikita.css/mixins/_respond-to.scss";
+@import "../../../bower_components/nikita.css/mixins/_triangle.scss";
+
+// nikita.css Extends
+@import "../../../bower_components/nikita.css/extends/_a11y.scss";
+@import "../../../bower_components/nikita.css/extends/_cf.scss";
+@import "../../../bower_components/nikita.css/extends/_ellipsis.scss";
+@import "../../../bower_components/nikita.css/extends/_hide-text.scss";
+@import "../../../bower_components/nikita.css/extends/_ib.scss";
+<% } %>
+
+/**
+ * Main Stylesheet
+ *
+ * Screen Layout
+ */
+
+// Compass
+@import "compass";
+
+// Webfonts
+@import "webfonts";
+
+// Browser-Reset
+@import "reset";
+
+// Mixins
+@import "mixins/**/*";
+
+// Variables
+@import "variables/**/*";
+
+// Extends
+@import "extends/**/*";
+
+// Basic Formatting
+@import "basics";
+
+// Icons
+@import "icons/**/*";
+
+// All Components
+@import "blocks/**/*";
