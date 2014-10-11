@@ -7,7 +7,7 @@ Options:
     Backbone: Include Backbone JS
 
 Example:
-    yo nikita [--coffee]
+    yo nikita
 
     This will create:
         Gruntfile.js: Configuration for the task runner.
