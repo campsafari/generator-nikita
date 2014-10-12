@@ -3,7 +3,7 @@
 var join = require('path').join;
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
-
+var path = require('path');
 module.exports = yeoman.generators.Base.extend({
 
   constructor: function () {
@@ -21,6 +21,7 @@ module.exports = yeoman.generators.Base.extend({
     this.pkg = require('../package.json');
   },
 
+
   askFor: function () {
     var done = this.async();
 
@@ -28,8 +29,8 @@ module.exports = yeoman.generators.Base.extend({
     if (!this.options['skip-welcome-message']) {
       this.log(require('yosay')());
       this.log(chalk.magenta(
-        'Out of the box I include HTML5 Boilerplate, jQuery, and a ' +
-        'Gruntfile.js to build your app.'
+        'A Generator for Scaffolding Webapps with ' +
+        'Foundation, Nikita, Backbone, Compass and Assemble.IO'
       ));
     }
 
@@ -49,6 +50,10 @@ module.exports = yeoman.generators.Base.extend({
         name: 'Backbone',
         value: 'includeBackbone',
         checked: false
+      },{
+        name: 'RequireJS',
+        value: 'includeRequire',
+        checked: false
       }]
     }];
 
@@ -59,6 +64,7 @@ module.exports = yeoman.generators.Base.extend({
         return features && features.indexOf(feat) !== -1;
       }
 
+      this.includeRequire= hasFeature('includeRequire') || false;
       this.includeFoundation = hasFeature('includeFoundation');
       this.includeNikitaCss = hasFeature('includeNikitaCss');
       this.includeBackbone = hasFeature('includeBackbone');
@@ -95,7 +101,7 @@ module.exports = yeoman.generators.Base.extend({
 
     if (this.includeFoundation)
     {
-      bower.dependencies["foundation"] = "5.x.x";
+      bower.dependencies["foundation"] = "5.4.5";
     }
 
     if (this.includeNikitaCss)
@@ -141,13 +147,32 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   app: function () {
-    this.directory('app');
+    this.mkdir('app');
+    this.mkdir('app/source');
+    this.directory('app/source/assemble/data', 'app/source/assemble/data');
+    this.directory('app/source/assemble/helpers', 'app/source/assemble/helpers');
+    this.directory('app/source/assemble/partials', 'app/source/assemble/partials');
+    this.directory('app/source/assemble/partials', 'app/source/assemble/partials');
+    //this.processDirectory('app/source/assemble/pages', 'app/source/assemble/pages');
+    this.mkdir('app/source/assemble/pages');
+    this.template('app/source/assemble/pages/index.hbs');
+    this.template('app/source/assemble/pages/forms.hbs');
+    this.template('app/source/assemble/pages/rwd-testing.hbs');
+    this.template('app/source/assemble/pages/example-layout-default.hbs');
+    this.template('app/source/assemble/pages/example-layout-fullpage.hbs');
+    
+    this.mkdir('app/source/assemble/layouts');
+    this.template('app/source/assemble/layouts/lyt-default.hbs');
+
+
     this.directory('app/source/sass/', 'app/source/sass/');
     this.mkdir('app/source/ajax');
-    this.mkdir('app/source/asset');
     this.mkdir('app/source/img');
     this.mkdir('app/source/js');
-    this.template('app/source/js/main.js', 'app/source/js/main.js');
+    if (this.includeRequire)
+    {
+      this.template('app/source/js/main.js', 'app/source/js/main.js');
+    }
     this.template('app/source/sass/styles.scss', 'app/source/sass/styles.scss');
 
   },
