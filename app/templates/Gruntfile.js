@@ -254,6 +254,7 @@ module.exports = function (grunt) {
     requirejs: {
       compile: {
         options: {
+          findNestedDependencies: true,
           baseUrl: "<%%= config.app %>/source/js",
           mainConfigFile: "<%%= config.app %>/source/js/main.js",
           out: ".tmp/source/js/main.js",
@@ -588,6 +589,14 @@ module.exports = function (grunt) {
             '{,*/}*.html',
             'styles/fonts/{,*/}*.*'
           ]
+        },{
+          expand: true,
+          dot: true,
+          cwd: '.tmp',
+          dest: '<%%= config.dist %>',
+          src: [
+            '{,*/}*.html'
+          ]
         }, {
           src: 'node_modules/apache-server-configs/dist/.htaccess',
           dest: '<%%= config.dist %>/.htaccess'
@@ -695,16 +704,13 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'assemble',
-    'wiredep',
+    'wiredep',<% if (includeRequire) { %>
+    'requirejs',<% } %>
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
-    'concat',
-    'cssmin',
-    'uglify',
     'copy:dist',
     'modernizr',
-    'rev',
     'usemin',
     'htmlmin'
   ]);
