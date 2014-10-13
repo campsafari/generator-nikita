@@ -23,6 +23,7 @@ module.exports = function (grunt) {
   var config = {
     app: 'app',
     dist: 'dist',
+    tmp: '.tmp',
     assemble: 'app/source/assemble'
   };
 
@@ -361,7 +362,7 @@ module.exports = function (grunt) {
       options: {
         dest: '<%%= config.dist %>'
       },
-      html: '<%%= config.app %>/index.html'
+      html: ['<%%= config.tmp %>/{,*/}*.html']
     },
 
     // Performs rewrites based on rev and the useminPrepare configuration
@@ -709,6 +710,8 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
+    'concat',
+    'uglify',
     'copy:dist',
     'modernizr',
     'usemin',
