@@ -71,7 +71,7 @@ module.exports = function (grunt) {
         },
         files: [
           '<%%= config.app %>/{,*/}*.html',
-          '.tmp/styles/{,*/}*.css',
+          '<%%= config.tmp %>/styles/{,*/}*.css',
           '<%%= config.app %>/images/{,*/}*'
         ]
       }
@@ -90,7 +90,7 @@ module.exports = function (grunt) {
         options: {
           middleware: function(connect) {
             return [
-              connect.static('.tmp'),
+              connect.static('<%%= config.tmp %>'),
               connect().use('/bower_components', connect.static('./bower_components')),
               connect.static(config.app)
             ];
@@ -103,7 +103,7 @@ module.exports = function (grunt) {
           port: 9001,
           middleware: function(connect) {
             return [
-              connect.static('.tmp'),
+              connect.static('<%%= config.tmp %>'),
               connect.static('test'),
               connect().use('/bower_components', connect.static('./bower_components')),
               connect.static(config.app)
@@ -125,7 +125,7 @@ module.exports = function (grunt) {
         files: [{
           dot: true,
           src: [
-            '.tmp',
+            '<%%= config.tmp %>',
             '<%%= config.dist %>/*',
             '!<%%= config.dist %>/.git*'
           ]
@@ -177,7 +177,7 @@ module.exports = function (grunt) {
       dev: {
         files: [{
           cwd: '<%%= config.assemble %>/pages/',
-          dest: '.tmp/',
+          dest: '<%%= config.tmp %>/',
           expand: true,
           flatten: true,
           src: ['**/*.hbs']
@@ -196,7 +196,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%%= config.app %>/source/sass',
           src: ['*.{scss,sass}'],
-          dest: '.tmp/styles',
+          dest: '<%%= config.tmp %>/styles',
           ext: '.css'
         }]
       },
@@ -218,7 +218,7 @@ module.exports = function (grunt) {
         datapngcss: '_icons-data-png.scss',
         datasvgcss: '_icons-data-svg.scss',
         urlpngcss: '_icons-fallback.scss',
-        tmpDir: '.tmp/grunticon-tmp',
+        tmpDir: '<%%= config.tmp %>/grunticon-tmp',
       },
       server: {
         options: {
@@ -228,7 +228,7 @@ module.exports = function (grunt) {
         },
         files: [
           {
-            cwd: '.tmp/svgmin/bgs',
+            cwd: '<%%= config.tmp %>/svgmin/bgs',
             dest: '<%%= config.app %>/source/sass/grunticon',
             expand: true,
             src: ['*.svg']
@@ -243,7 +243,7 @@ module.exports = function (grunt) {
         },
         files: [
           {
-            cwd: '.tmp/svgmin/bgs',
+            cwd: '<%%= config.tmp %>/svgmin/bgs',
             dest: '<%%= config.app %>/source/sass/grunticon',
             expand: true,
             src: ['*.svg']
@@ -258,7 +258,7 @@ module.exports = function (grunt) {
           findNestedDependencies: true,
           baseUrl: "<%%= config.app %>/source/js",
           mainConfigFile: "<%%= config.app %>/source/js/main.js",
-          out: ".tmp/source/js/main.js",
+          out: "<%%= config.tmp %>/scripts/vendor.js",
           name: "main"
         }
       }
@@ -270,7 +270,7 @@ module.exports = function (grunt) {
         },
         compile: {
             files: {
-                '.tmp/source/js/templates.js': ['<%%= config.app %>/source/js/**/*.ejs']
+                '<%%= config.tmp %>/source/js/templates.js': ['<%%= config.app %>/source/js/**/*.ejs']
             }
         }
     },
@@ -296,9 +296,9 @@ module.exports = function (grunt) {
       },
       server: {
         options: {
-          cssDir: '.tmp/styles',
+          cssDir: '<%%= config.tmp %>/styles',
           environment: 'development',
-          javascriptsDir: '.tmp/js',
+          javascriptsDir: '<%%= config.tmp %>/js',
           sourcemap: true
         }
       },
@@ -320,9 +320,9 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '.tmp/styles/',
+          cwd: '<%%= config.tmp %>/styles/',
           src: '{,*/}*.css',
-          dest: '.tmp/styles/'
+          dest: '<%%= config.tmp %>/styles/'
         }]
       }
     },
@@ -431,14 +431,14 @@ module.exports = function (grunt) {
         files: [
           {
             cwd: '<%%= config.app %>/source/img/bgs',
-            dest: '.tmp/svgmin/bgs',
+            dest: '<%%= config.tmp %>/svgmin/bgs',
             expand: true,
             ext: '.svg',
             src: ['*.svg']
           },
           {
             cwd: '<%%= config.app %>/source/img/icons',
-            dest: '.tmp/svgmin/icons',
+            dest: '<%%= config.tmp %>/svgmin/icons',
             expand: true,
             ext: '.svg',
             src: ['*.svg']
@@ -449,14 +449,14 @@ module.exports = function (grunt) {
         files: [
           {
             cwd: '<%%= config.app %>/source/img/bgs',
-            dest: '.tmp/svgmin/bgs',
+            dest: '<%%= config.tmp %>/svgmin/bgs',
             expand: true,
             ext: '.svg',
             src: ['*.svg']
           },
           {
             cwd: '<%%= config.app %>/source/img/icons',
-            dest: '.tmp/svgmin/icons',
+            dest: '<%%= config.tmp %>/svgmin/icons',
             expand: true,
             ext: '.svg',
             src: ['*.svg']
@@ -479,12 +479,12 @@ module.exports = function (grunt) {
       },
       server: {
         files: {
-          '.tmp/icon-sprite.svg': ['.tmp/svgmin/icons/*.svg']
+          '<%%= config.tmp %>/icon-sprite.svg': ['<%%= config.tmp %>/svgmin/icons/*.svg']
         }
       },
       dist: {
         files: {
-          '.tmp/icon-sprite.svg': ['.tmp/svgmin/icons/*.svg']
+          '<%%= config.tmp %>/icon-sprite.svg': ['<%%= config.tmp %>/svgmin/icons/*.svg']
         }
       }
     },
@@ -593,7 +593,7 @@ module.exports = function (grunt) {
         },{
           expand: true,
           dot: true,
-          cwd: '.tmp',
+          cwd: '<%%= config.tmp %>',
           dest: '<%%= config.dist %>',
           src: [
             '{,*/}*.html'
@@ -607,14 +607,14 @@ module.exports = function (grunt) {
         expand: true,
         dot: true,
         cwd: '<%%= config.app %>/source/sass',
-        dest: '.tmp/styles/',
+        dest: '<%%= config.tmp %>/styles/',
         src: '{,*/}*.css'
       },
       js: {
         expand: true,
         dot: true,
         cwd: '<%%= config.app %>/source/js',
-        dest: '.tmp/source/js',
+        dest: '<%%= config.tmp %>/source/js',
         src: '{,*/}*.js'
       }
     },
@@ -705,12 +705,12 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'assemble',
-    'wiredep',<% if (includeRequire) { %>
-    'requirejs',<% } %>
+    'wiredep',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
-    'concat',
+    'concat',<% if (includeRequire) { %>
+    'requirejs',<% } %>
     'uglify',
     'copy:dist',
     'modernizr',
