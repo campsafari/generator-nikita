@@ -94,7 +94,9 @@
     <![endif]-->
 
 
-    <!-- build:js(.) scripts/vendor.js -->
+    <!-- build:js(.tmp) scripts/vendor.js -->
+    <!-- bower:js -->
+    <!-- endbower -->
     <% if (includeRequire){ %>
     <script src="bower_components/requirejs/require.js"></script>
     <script src="source/js/main.js"></script>
@@ -102,8 +104,6 @@
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/foundation/js/foundation.js"></script>
     <% } %>
-    <!-- bower:js -->
-    <!-- endbower -->
     <!-- endbuild -->
     <% if (!includeRequire && includeFoundation){ %>
 	<script>

@@ -255,14 +255,16 @@ module.exports = function (grunt) {
     requirejs: {
       compile: {
         options: {
+          optimize: "none",
           findNestedDependencies: true,
           baseUrl: "<%%= config.app %>/source/js",
           mainConfigFile: "<%%= config.app %>/source/js/main.js",
-          out: "<%%= config.tmp %>/scripts/vendor.js",
+          out: "<%%= config.tmp %>/source/js/main.js",
           name: "main"
         }
       }
     },
+
 
     jst: {
         options: {
@@ -561,6 +563,22 @@ module.exports = function (grunt) {
     //   dist: {}
     // },
 
+    //symlinks bower components to tmp for build task
+    symlink: {
+      // Enable overwrite to delete symlinks before recreating them
+      options: {
+        overwrite: false
+      },
+      // The "build/target.txt" symlink will be created and linked to
+      // "source/target.txt". It should appear like this in a file listing:
+      // build/target.txt -> ../source/target.txt
+      explicit: {
+        src: 'bower_components',
+        dest: '<%= config.tmp %>/bower_components'
+      },
+    },
+
+
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
@@ -691,11 +709,12 @@ module.exports = function (grunt) {
     'clean:dist',
     'assemble',
     'wiredep',
+    'symlink',
     'useminPrepare',
     'concurrent:dist',
-    'autoprefixer',
-    'concat',<% if (includeRequire) { %>
+    'autoprefixer',<% if (includeRequire) { %>
     'requirejs',<% } %>
+    'concat',
     'uglify',
     'copy:dist',
     'modernizr',
