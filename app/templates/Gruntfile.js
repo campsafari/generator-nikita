@@ -574,7 +574,7 @@ module.exports = function (grunt) {
       // build/target.txt -> ../source/target.txt
       explicit: {
         src: 'bower_components',
-        dest: '<%= config.tmp %>/bower_components'
+        dest: '<%%= config.tmp %>/bower_components'
       },
     },
 
