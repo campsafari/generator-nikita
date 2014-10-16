@@ -4,7 +4,7 @@ layout: lyt-default.hbs
 description: This index shows all pages of this project.
 ---
 
-<% if (includeFoundation) { %>
+<% if (config.get('features').indexOf('foundation') >= 0) { %>
  <div class="row">
       <div class="large-12 columns">
         <h1>Welcome to Foundation</h1>

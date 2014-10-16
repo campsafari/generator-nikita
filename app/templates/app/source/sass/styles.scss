@@ -1,7 +1,7 @@
-<% if (includeFoundation) { %>
+<% if (config.get('features').indexOf('foundation') >= 0) { %>
 @import "../../../bower_components/foundation/scss/foundation";
 <% } %>
-<% if (includeNikitaCss) { %>
+<% if (config.get('features').indexOf('nikitacss') >= 0) { %>
 // nikita.css Mixins
 @import "../../../bower_components/nikita.css/mixins/_centering.scss";
 @import "../../../bower_components/nikita.css/mixins/_fixed-ratiobox.scss";

@@ -90,7 +90,7 @@ module.exports = function (grunt) {
         options: {
           middleware: function(connect) {
             return [
-              connect.static('<%%= config.tmp %>'),
+              connect.static('.tmp'),
               connect().use('/bower_components', connect.static('./bower_components')),
               connect.static(config.app)
             ];
@@ -669,7 +669,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'assemble',<% if(includeNikitaCss) { %>
+      'assemble',<% if (config.get('features').indexOf('nikitacss') >= 0) { %>
       'svgmin:server',
       'svgstore:server',
       'grunticon:server',
@@ -712,7 +712,7 @@ module.exports = function (grunt) {
     'symlink',
     'useminPrepare',
     'concurrent:dist',
-    'autoprefixer',<% if (includeRequire) { %>
+    'autoprefixer',<% if (config.get('features').indexOf('requirejs') >= 0) { %>
     'requirejs',<% } %>
     'concat',
     'uglify',

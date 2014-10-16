@@ -97,15 +97,15 @@
     <!-- build:js(.tmp) scripts/vendor.js -->
     <!-- bower:js -->
     <!-- endbower -->
-    <% if (includeRequire){ %>
+    <% if (config.get('features').indexOf('requirejs') >= 0){ %>
     <script src="bower_components/requirejs/require.js"></script>
     <script src="source/js/main.js"></script>
-    <% } else if (includeFoundation) { %>
+    <% } else if (config.get('features').indexOf('foundation') >= 0) { %>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/foundation/js/foundation.js"></script>
     <% } %>
     <!-- endbuild -->
-    <% if (!includeRequire && includeFoundation){ %>
+    <% if (config.get('features').indexOf('requirejs') === -1 && config.get('features').indexOf('foundation') >= 0){ %>
 	<script>
       $(document).foundation();
     </script>

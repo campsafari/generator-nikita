@@ -19,6 +19,7 @@ module.exports = yeoman.generators.Base.extend({
     this.testFramework = this.options['test-framework'];
 
     this.pkg = require('../package.json');
+
   },
 
 
@@ -34,40 +35,37 @@ module.exports = yeoman.generators.Base.extend({
       ));
     }
 
-    var prompts = [{
-      type: 'checkbox',
-      name: 'features',
-      message: 'What more would you like?',
-      choices: [{
-        name: 'Foundation',
-        value: 'includeFoundation',
-        checked: true
-      },{
-        name: 'Nikita CSS',
-        value: 'includeNikitaCss',
-        checked: false
-      },{
-        name: 'Backbone',
-        value: 'includeBackbone',
-        checked: false
-      },{
-        name: 'RequireJS',
-        value: 'includeRequire',
-        checked: false
-      }]
+    var prompts = [
+      {
+        type: 'checkbox',
+        name: 'features',
+        message: 'So whatcha whatcha whatcha want?',
+        choices: [{
+          name: 'Foundation',
+          value: 'foundation'
+        },
+        {
+          name: 'Nikita CSS',
+          value: 'nikitacss'
+        },
+        {
+          name: 'Backbone',
+          value: 'backbone'
+        },
+        {
+          name: 'RequireJS',
+          value: 'requirejs'
+        }]
     }];
 
-    this.prompt(prompts, function (answers) {
-      var features = answers.features;
-
-      function hasFeature(feat) {
-        return features && features.indexOf(feat) !== -1;
+    this.prompt(prompts, function (options){
+      for (var key in options)
+      {
+        if (options.hasOwnProperty(key))
+        {
+          this.config.set(key, options[key]);
+        }
       }
-
-      this.includeRequire= hasFeature('includeRequire') || false;
-      this.includeFoundation = hasFeature('includeFoundation');
-      this.includeNikitaCss = hasFeature('includeNikitaCss');
-      this.includeBackbone = hasFeature('includeBackbone');
 
       done();
 
@@ -94,24 +92,28 @@ module.exports = yeoman.generators.Base.extend({
       name: this._.slugify(this.appname),
       private: true,
       dependencies: {
-        "requirejs": "~2.1.8",
         "jsb": "~2.x.x"
       }
     };
 
-    if (this.includeFoundation)
+    if (this.config.get('features').indexOf('foundation') >= 0)
     {
       bower.dependencies["foundation"] = "5.4.5";
     }
 
-    if (this.includeNikitaCss)
+    if (this.config.get('features').indexOf('nikitacss') >= 0)
     {
       bower.dependencies["nikita.css"] = "0.x.x";
     }
 
-    if (this.includeBackbone)
+    if (this.config.get('features').indexOf('backbone') >= 0)
     {
       bower.dependencies["backbone"] = "1.x.x";
+    }
+
+    if (this.config.get('features').indexOf('requirejs') >= 0)
+    {
+      bower.dependencies["requirejs"] = "2.1.8";
     }
 
     this.copy('bowerrc', '.bowerrc');
@@ -153,7 +155,7 @@ module.exports = yeoman.generators.Base.extend({
     this.directory('app/source/assemble/helpers', 'app/source/assemble/helpers');
     this.directory('app/source/assemble/partials', 'app/source/assemble/partials');
     this.directory('app/source/assemble/partials', 'app/source/assemble/partials');
-    //this.processDirectory('app/source/assemble/pages', 'app/source/assemble/pages');
+   
     this.mkdir('app/source/assemble/pages');
     this.template('app/source/assemble/pages/index.hbs');
     this.template('app/source/assemble/pages/forms.hbs');
@@ -164,16 +166,17 @@ module.exports = yeoman.generators.Base.extend({
     this.mkdir('app/source/assemble/layouts');
     this.template('app/source/assemble/layouts/lyt-default.hbs');
 
-
     this.directory('app/source/sass/', 'app/source/sass/');
+    this.template('app/source/sass/styles.scss', 'app/source/sass/styles.scss');
+
     this.mkdir('app/source/ajax');
     this.mkdir('app/source/img');
     this.mkdir('app/source/js');
-    if (this.includeRequire)
+
+    if (this.config.get('features').indexOf('requirejs') >= 0)
     {
       this.template('app/source/js/main.js', 'app/source/js/main.js');
     }
-    this.template('app/source/sass/styles.scss', 'app/source/sass/styles.scss');
 
   },
 
